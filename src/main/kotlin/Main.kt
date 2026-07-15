@@ -11,7 +11,7 @@ fun main() {
     while (true) {
         print("명령) ")
         val command = readLine()
-        when (command) {
+        when (command?.split("?")[0]) {
             "등록" -> {
                 print("명언 : ")
                 val wiseSaying: String? = readLine()
@@ -29,7 +29,18 @@ fun main() {
                     println("${index + 1} / ${authors.get(index)} / $wiseSaying")
                 }
             }
-            else -> break
+            "삭제" -> {
+                val deleteIndex: Int? = command.split("?id=")[1].toIntOrNull()
+                if (deleteIndex in wiseSayings.indices) {
+                    wiseSayings.removeAt(deleteIndex ?: 0)
+                    authors.removeAt(deleteIndex ?: 0)
+                    println("${deleteIndex}번 명언이 삭제되었습니다.")
+                } else {
+                    println("${deleteIndex}번 명언은 존재하지 않습니다.")
+                }
+            }
+            "종료" -> break
+            else -> println("명령을 다시 입력해 주세요")
         }
     }
     println("명령) 종료")
